@@ -1,4 +1,4 @@
-package app
+package components.app
 
 import react.*
 
