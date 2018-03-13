@@ -1,7 +1,6 @@
 package components.navigation
 
-import kotlinx.html.classes
-import kotlinx.html.js.onClickFunction
+import components.button.button
 import react.*
 import react.dom.div
 
@@ -23,23 +22,9 @@ class Navigation : RComponent<NavigationProps, RState>() {
 
     override fun RBuilder.render() {
         div {
-            btn("Characters", ActivePage.CHARACTERS, props.showCharacterPage)
-            btn("Episodes", ActivePage.EPISODES, props.showEpisodePage)
-            btn("Locations", ActivePage.LOCATIONS, props.showLocationPage)
-        }
-    }
-
-    private fun RBuilder.btn(label: String, activePage: ActivePage, onClickF: () -> Unit) {
-        div {
-            +label
-
-            attrs {
-                if (props.activePage == activePage) {
-                    classes += "???"
-                } else {
-                    onClickFunction = { onClickF() }
-                }
-            }
+            button("Characters", props.activePage == ActivePage.CHARACTERS, props.showCharacterPage)
+            button("Episodes", props.activePage == ActivePage.EPISODES, props.showEpisodePage)
+            button("Locations", props.activePage == ActivePage.LOCATIONS, props.showLocationPage)
         }
     }
 
