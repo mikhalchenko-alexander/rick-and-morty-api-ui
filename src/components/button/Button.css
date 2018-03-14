@@ -20,6 +20,10 @@
     background-color: palegreen;
 }
 
+.Button:active {
+    background-color: darkseagreen;
+}
+
 /* Element */
 
 .Button__Label {
@@ -31,10 +35,6 @@
 
 /* Modifier */
 
-.Button:active:not(.Button_active) {
-    background-color: darkseagreen;
-}
-
 .Button_active {
     background-color: palegreen;
     cursor: default;
@@ -45,7 +45,8 @@
 }
 
 .Button_disabled,
-.Button_disabled:active {
+.Button_disabled:active,
+.Button_disabled:hover {
     border: 2px solid gray;
     color: gray;
     background-color: #eee;

@@ -1,7 +1,11 @@
 package components.navigation
 
 import components.button.button
-import react.*
+import components.button.buttonActive
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 import react.dom.div
 
 interface NavigationProps : RProps {
@@ -20,11 +24,20 @@ enum class ActivePage {
 
 class Navigation : RComponent<NavigationProps, RState>() {
 
+    private val navBtnClasses = setOf("Navigation__Button")
+
     override fun RBuilder.render() {
-        div {
-            button("Characters", props.activePage == ActivePage.CHARACTERS, "Navigation__Button", props.showCharacterPage)
-            button("Episodes", props.activePage == ActivePage.EPISODES, "Navigation__Button", props.showEpisodePage)
-            button("Locations", props.activePage == ActivePage.LOCATIONS, "Navigation__Button", props.showLocationPage)
+        div(classes = "Navigation App__Navigation") {
+            listOf(
+                Triple("Characters", ActivePage.CHARACTERS, props.showCharacterPage),
+                Triple("Episodes", ActivePage.EPISODES, props.showEpisodePage),
+                Triple("Locations", ActivePage.LOCATIONS, props.showLocationPage)
+            ).map { (label, active, onClickFunction) ->
+                when (active) {
+                    props.activePage -> buttonActive(label, navBtnClasses)
+                    else -> button(label, navBtnClasses, { onClickFunction() })
+                }
+            }
         }
     }
 

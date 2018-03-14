@@ -2,16 +2,13 @@ package components.button
 
 import kotlinx.html.classes
 import kotlinx.html.js.onClickFunction
-import react.RBuilder
-import react.RComponent
-import react.RProps
-import react.RState
+import org.w3c.dom.events.Event
+import react.*
 import react.dom.div
 
 interface ButtonProps : RProps {
     var label: String
-    var isActive: Boolean
-    var onClickF: () -> Unit // TODO: Make it (Event) -> Unit
+    var onClickFunction: ((Event) -> Unit)?
     var additionalClasses: Set<String>
 }
 
@@ -20,8 +17,7 @@ class Button: RComponent<ButtonProps, RState>() {
         div(classes = "Button") {
             attrs {
                 classes += props.additionalClasses
-                if (props.isActive) { classes += "Button_active" }
-                else { onClickFunction = { props.onClickF() } }
+                props.onClickFunction?.also { println("Bind"); onClickFunction = it }
             }
 
             div(classes = "Button__Label") {
@@ -32,12 +28,14 @@ class Button: RComponent<ButtonProps, RState>() {
 
 }
 
-fun RBuilder.button(label: String, isActive: Boolean, additionalClasses: Set<String>, onClickF: () -> Unit) = child(Button::class) {
+fun RBuilder.button(label: String, additionalClasses: Set<String> = emptySet(), onClickFunction: ((Event) -> Unit)? = {}) = child(Button::class) {
     attrs.label = label
-    attrs.isActive = isActive
-    attrs.onClickF = onClickF
+    attrs.onClickFunction = onClickFunction
     attrs.additionalClasses = additionalClasses
 }
 
-fun RBuilder.button(label: String, isActive: Boolean, additionalClasses: String, onClickF: () -> Unit) =
-    button(label, isActive, additionalClasses.split("\\s+").toSet(), onClickF)
+fun RBuilder.buttonActive(label: String, additionalClasses: Set<String> = emptySet()) =
+    button(label, additionalClasses + "Button_active", undefined)
+
+fun RBuilder.buttonDisabled(label: String, additionalClasses: Set<String> = emptySet()) =
+    button(label, additionalClasses + "Button_disabled", undefined)

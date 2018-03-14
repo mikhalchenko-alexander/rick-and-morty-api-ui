@@ -1,0 +1,6 @@
+/* Mixin */
+
+.AbstractPage__Button {
+    display: inline-block;
+    margin-right: 5px;
+}

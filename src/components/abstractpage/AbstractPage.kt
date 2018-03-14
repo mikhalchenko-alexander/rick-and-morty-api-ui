@@ -1,10 +1,10 @@
 package components.abstractpage
 
-import kotlinx.html.js.onClickFunction
+import components.button.button
+import components.button.buttonDisabled
 import model.Page
 import react.*
 import react.dom.div
-import react.dom.span
 import kotlin.js.Promise
 
 interface PageProps<T> : RProps {
@@ -15,28 +15,22 @@ interface PageProps<T> : RProps {
 
 class AbstractPage<T>(props: PageProps<T>) : RComponent<PageProps<T>, RState>(props) {
 
+    private val abstractPageBtnClasses = setOf("AbstractPage__Button")
+
     override fun RBuilder.render() {
-        div {
-            pagingButton("<", props.page?.info?.previous)
-            pagingButton(">", props.page?.info?.next)
+        div(classes = "AbstractPage App__AbstractPage") {
+            listOf(
+                "<" to props.page?.info?.previous,
+                ">" to props.page?.info?.next
+            ).map { (label, pageUrl) ->
+                when {
+                    pageUrl == null || pageUrl.isBlank() -> buttonDisabled(label, abstractPageBtnClasses)
+                    else -> button(label, abstractPageBtnClasses, { props.getPage(pageUrl).then(props.onPageLoad) })
+                }
+            }
         }
 
         children()
-    }
-
-    private fun RBuilder.pagingButton(label: String, pageUrl: String?) {
-        pageUrl?.takeIf { it.isNotEmpty() }?.also {
-            span {
-                +label
-                attrs {
-                    onClickFunction = {
-                        props.getPage(pageUrl).then(props.onPageLoad)
-                    }
-                }
-            }
-        } ?: span {
-            +label
-        }
     }
 
 }
