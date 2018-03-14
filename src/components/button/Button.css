@@ -1,9 +1,15 @@
+:root {
+    --Button_width: 120px;
+    --Button_height: 30px;
+}
+
+/* Block */
+
 .Button {
     border: 2px solid black;
-    width: 120px;
-    height: 30px;
+    width: var(--Button_width);
+    height: var(--Button_height);
     border-radius: 5px;
-    display: inline-block;
     text-align: center;
     cursor: pointer;
     font-size: 18px;
@@ -13,6 +19,17 @@
 .Button:hover {
     background-color: palegreen;
 }
+
+/* Element */
+
+.Button__Label {
+    display: table-cell;
+    vertical-align: middle;
+    width: var(--Button_width);
+    height: var(--Button_height);
+}
+
+/* Modifier */
 
 .Button:active:not(.Button_active) {
     background-color: darkseagreen;

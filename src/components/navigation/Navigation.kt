@@ -22,9 +22,9 @@ class Navigation : RComponent<NavigationProps, RState>() {
 
     override fun RBuilder.render() {
         div {
-            button("Characters", props.activePage == ActivePage.CHARACTERS, props.showCharacterPage)
-            button("Episodes", props.activePage == ActivePage.EPISODES, props.showEpisodePage)
-            button("Locations", props.activePage == ActivePage.LOCATIONS, props.showLocationPage)
+            button("Characters", props.activePage == ActivePage.CHARACTERS, "Navigation__Button", props.showCharacterPage)
+            button("Episodes", props.activePage == ActivePage.EPISODES, "Navigation__Button", props.showEpisodePage)
+            button("Locations", props.activePage == ActivePage.LOCATIONS, "Navigation__Button", props.showLocationPage)
         }
     }
 
