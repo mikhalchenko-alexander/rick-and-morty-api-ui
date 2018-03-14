@@ -1,5 +1,6 @@
 package components.app
 
+import api.getCharacters
 import components.characterlist.characterList
 import components.characterpage.characterPage
 import components.episodelist.episodeList
@@ -14,7 +15,7 @@ sealed class Screen(val activePage: ActivePage)
 object ScreenCharacterPage : Screen(ActivePage.CHARACTERS)
 object ScreenEpisodePage : Screen(ActivePage.EPISODES)
 object ScreenLocationPage : Screen(ActivePage.LOCATIONS)
-class ScreenCharacterList(val characterList: List<String>) : Screen(ActivePage.NONE)
+class ScreenCharacterList(val characterList: List<Character>) : Screen(ActivePage.NONE)
 class ScreenEpisodeList(val character: Character) : Screen(ActivePage.NONE)
 
 interface AppState : RState {
@@ -46,7 +47,11 @@ class App : RComponent<RProps, AppState>() {
     }
 
     private fun setScreen(scr: Screen) = setState { screen = scr }
-    private fun showCharacterList(characterUrls: List<String>) = setScreen(ScreenCharacterList(characterUrls))
+    private fun showCharacterList(characterUrls: List<String>) {
+        getCharacters(characterUrls).then {
+            setScreen(ScreenCharacterList(it))
+        }
+    }
     private fun showEpisodeList(character: Character) = setScreen(ScreenEpisodeList(character))
 }
 

@@ -2,6 +2,7 @@ package components.character
 
 import components.button.button
 import components.itemcard.itemCard
+import kotlinx.html.classes
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -13,6 +14,7 @@ import model.Character as CharacterModel
 interface CharacterProps : RProps {
     var character: CharacterModel
     var showEpisodeList: ((CharacterModel) -> Unit)?
+    var additionalClasses: Set<String>
 }
 
 class Character : RComponent<CharacterProps, RState>() {
@@ -20,6 +22,10 @@ class Character : RComponent<CharacterProps, RState>() {
     override fun RBuilder.render() {
         with(props.character) {
             div(classes = "Character") {
+                attrs {
+                    classes += props.additionalClasses
+                }
+
                 div(classes = "Character__Avatar") {
                     img {
                         attrs {
@@ -50,7 +56,9 @@ class Character : RComponent<CharacterProps, RState>() {
 
 }
 
-fun RBuilder.character(character: CharacterModel, showEpisodeList: ((CharacterModel) -> Unit)?) = child(Character::class) {
-    attrs.character = character
-    attrs.showEpisodeList = showEpisodeList
-}
+fun RBuilder.character(character: CharacterModel, showEpisodeList: ((CharacterModel) -> Unit)?, additionalClasses: Set<String> = emptySet()) =
+    child(Character::class) {
+        attrs.character = character
+        attrs.showEpisodeList = showEpisodeList
+        attrs.additionalClasses = additionalClasses
+    }
