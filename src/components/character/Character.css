@@ -1,0 +1,18 @@
+/* Block */
+
+.Character {
+    display: flex;
+    border: 3px solid black;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Element */
+
+.Character__Avatar {
+    margin-right: 20px;
+}
+
+.Character__ItemCard {
+    margin: 10px 0;
+}

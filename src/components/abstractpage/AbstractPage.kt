@@ -1,6 +1,6 @@
 package components.abstractpage
 
-import components.button.button
+import components.button.buttonCustom
 import components.button.buttonDisabled
 import model.Page
 import react.*
@@ -25,7 +25,7 @@ class AbstractPage<T>(props: PageProps<T>) : RComponent<PageProps<T>, RState>(pr
             ).map { (label, pageUrl) ->
                 when {
                     pageUrl == null || pageUrl.isBlank() -> buttonDisabled(label, abstractPageBtnClasses)
-                    else -> button(label, abstractPageBtnClasses, { props.getPage(pageUrl).then(props.onPageLoad) })
+                    else -> buttonCustom(label, abstractPageBtnClasses, { props.getPage(pageUrl).then(props.onPageLoad) })
                 }
             }
         }

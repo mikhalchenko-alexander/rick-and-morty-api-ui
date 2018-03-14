@@ -17,7 +17,7 @@ class Button: RComponent<ButtonProps, RState>() {
         div(classes = "Button") {
             attrs {
                 classes += props.additionalClasses
-                props.onClickFunction?.also { println("Bind"); onClickFunction = it }
+                props.onClickFunction?.also { onClickFunction = it }
             }
 
             div(classes = "Button__Label") {
@@ -28,14 +28,16 @@ class Button: RComponent<ButtonProps, RState>() {
 
 }
 
-fun RBuilder.button(label: String, additionalClasses: Set<String> = emptySet(), onClickFunction: ((Event) -> Unit)? = {}) = child(Button::class) {
+fun RBuilder.buttonCustom(label: String, additionalClasses: Set<String> = emptySet(), onClickFunction: ((Event) -> Unit)? = {}) = child(Button::class) {
     attrs.label = label
     attrs.onClickFunction = onClickFunction
     attrs.additionalClasses = additionalClasses
 }
 
+fun RBuilder.button(label: String, onClickFunction: ((Event) -> Unit)? = undefined) = buttonCustom(label, emptySet(), onClickFunction)
+
 fun RBuilder.buttonActive(label: String, additionalClasses: Set<String> = emptySet()) =
-    button(label, additionalClasses + "Button_active", undefined)
+    buttonCustom(label, additionalClasses + "Button_active", undefined)
 
 fun RBuilder.buttonDisabled(label: String, additionalClasses: Set<String> = emptySet()) =
-    button(label, additionalClasses + "Button_disabled", undefined)
+    buttonCustom(label, additionalClasses + "Button_disabled", undefined)

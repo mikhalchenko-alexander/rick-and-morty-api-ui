@@ -1,0 +1,9 @@
+/* Element */
+
+.ItemCard__ItemCardRowKey {
+    display: inline-block;
+}
+
+.ItemCard__ItemCardRowValue {
+    display: inline-block;
+}

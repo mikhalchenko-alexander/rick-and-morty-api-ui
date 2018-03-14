@@ -1,7 +1,7 @@
 package components.navigation
 
-import components.button.button
 import components.button.buttonActive
+import components.button.buttonCustom
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -35,7 +35,7 @@ class Navigation : RComponent<NavigationProps, RState>() {
             ).map { (label, active, onClickFunction) ->
                 when (active) {
                     props.activePage -> buttonActive(label, navBtnClasses)
-                    else -> button(label, navBtnClasses, { onClickFunction() })
+                    else -> buttonCustom(label, navBtnClasses, { onClickFunction() })
                 }
             }
         }
