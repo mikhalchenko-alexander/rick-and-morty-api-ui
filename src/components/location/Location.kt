@@ -1,10 +1,10 @@
 package components.location
 
-import kotlinx.html.js.onClickFunction
+import components.button.button
+import components.itemcard.itemCard
 import react.*
 import model.Location as LocationModel
 import react.dom.div
-import react.dom.span
 
 interface LocationProps : RProps {
     var location: LocationModel
@@ -16,27 +16,17 @@ class Location : RComponent<LocationProps, RState>() {
     override fun RBuilder.render() {
         with(props.location) {
             div {
-                row("Name:", name)
-                row("Dimension:", dimension)
-                row("Type:", type)
-                div {
-                    span {
-                        +"Residents..."
+                itemCard(
+                    setOf("Character__ItemCard"),
+                    "Name:" to name,
+                    "Dimension:" to dimension,
+                    "Type:" to type
+                )
 
-                        attrs {
-                            onClickFunction = { props.showCharacterList(props.location.residents.toList()) }
-                        }
-                    }
-                }
+                button("Residents...", { props.showCharacterList(props.location.residents.toList()) })
             }
         }
     }
-
-    private fun RBuilder.row(label: String, value: String) =
-        div {
-            span { +label }
-            span { +value }
-        }
 }
 
 fun RBuilder.location(location: LocationModel, showCharacterList: (List<String>) -> Unit) = child(Location::class) {
