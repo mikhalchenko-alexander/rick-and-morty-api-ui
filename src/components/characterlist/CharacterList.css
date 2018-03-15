@@ -1,5 +1,12 @@
+/* Block */
+
+.CharacterList {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 /* Mixin */
 
-.CharacterList__Character:not(:last-child) {
-    margin-bottom: 10px;
+.CharacterList__Character {
+    margin: 0 10px 10px 0;
 }
