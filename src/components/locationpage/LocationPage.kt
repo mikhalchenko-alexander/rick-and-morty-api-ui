@@ -34,9 +34,9 @@ class LocationPage(props: LocationPageProps) : RComponent<LocationPageProps, Loc
                 onPageLoad = { setState { locations = it } }
             }
 
-            state.locations?.results?.toList()?.chunked(4) { locations ->
-                div {
-                    locations.map { location(it, props.showCharacterList) }
+            div(classes = "LocationPage") {
+                state.locations?.results?.toList()?.let { locations ->
+                    locations.map { location(it, setOf("LocationPage__Location"), props.showCharacterList) }
                 }
             }
         }

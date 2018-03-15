@@ -1,0 +1,16 @@
+/* Block */
+
+.LocationPage {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Mixin */
+
+.LocationPage__Location {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    width: 380px;
+    margin: 0 10px 10px 0;
+}
