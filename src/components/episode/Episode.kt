@@ -17,7 +17,7 @@ class Episode : RComponent<EpisodeProps, RState>() {
         with(props.episode) {
             div {
                 itemCard(
-                    setOf("Character__ItemCard"),
+                    emptySet(),
                     "Name:" to name,
                     "Air date:" to airDate,
                     "Episode:" to episode

@@ -17,7 +17,7 @@ class Location : RComponent<LocationProps, RState>() {
         with(props.location) {
             div {
                 itemCard(
-                    setOf("Character__ItemCard"),
+                    emptySet(),
                     "Name:" to name,
                     "Dimension:" to dimension,
                     "Type:" to type
