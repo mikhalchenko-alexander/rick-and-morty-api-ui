@@ -13,10 +13,8 @@ interface EpisodeListProps : RProps {
 class EpisodeList : RComponent<EpisodeListProps, RState>() {
 
     override fun RBuilder.render() {
-        props.episodes.chunked(4) { episodes ->
-            div {
-                episodes.map { episode(it, props.showCharacterList) }
-            }
+        div(classes = "EpisodeList") {
+            props.episodes.map { episode(it, setOf("EpisodeList__Episode"), props.showCharacterList) }
         }
     }
 

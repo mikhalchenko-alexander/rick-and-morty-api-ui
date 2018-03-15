@@ -3,6 +3,7 @@
 .ItemCard__ItemCardRow {
     line-height: 1.7em;
     display: table-row;
+    font-size: 15px;
 }
 
 .ItemCard__ItemCardRowKey {
