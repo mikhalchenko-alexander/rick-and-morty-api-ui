@@ -12,6 +12,7 @@ import components.navigation.navigation
 import model.Character
 import model.Episode
 import react.*
+import react.dom.div
 
 sealed class Screen(val activePage: ActivePage)
 object ScreenCharacterPage : Screen(ActivePage.CHARACTERS)
@@ -31,20 +32,22 @@ class App : RComponent<RProps, AppState>() {
     }
 
     override fun RBuilder.render() {
-        val currentScreen = state.screen
-        navigation(
-            showCharacterPage = { setScreen(ScreenCharacterPage) },
-            showEpisodePage = { setScreen(ScreenEpisodePage) },
-            showLocationPage = { setScreen(ScreenLocationPage) },
-            activePage = currentScreen.activePage
-        )
+        div(classes = "App") {
+            val currentScreen = state.screen
+            navigation(
+                showCharacterPage = { setScreen(ScreenCharacterPage) },
+                showEpisodePage = { setScreen(ScreenEpisodePage) },
+                showLocationPage = { setScreen(ScreenLocationPage) },
+                activePage = currentScreen.activePage
+            )
 
-        when (currentScreen) {
-            is ScreenCharacterList -> characterList(currentScreen.characterList, ::showEpisodeList)
-            is ScreenCharacterPage -> characterPage(::showEpisodeList)
-            is ScreenEpisodeList -> episodeList(currentScreen.episodes, ::showCharacterList)
-            is ScreenEpisodePage -> episodePage(::showCharacterList)
-            is ScreenLocationPage -> locationPage(::showCharacterList)
+            when (currentScreen) {
+                is ScreenCharacterList -> characterList(currentScreen.characterList, ::showEpisodeList)
+                is ScreenCharacterPage -> characterPage(::showEpisodeList)
+                is ScreenEpisodeList -> episodeList(currentScreen.episodes, ::showCharacterList)
+                is ScreenEpisodePage -> episodePage(::showCharacterList)
+                is ScreenLocationPage -> locationPage(::showCharacterList)
+            }
         }
     }
 

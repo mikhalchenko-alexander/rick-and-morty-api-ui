@@ -1,3 +1,7 @@
+.App {
+    font-family: "Comic Sans MS", serif;
+}
+
 /* Mixin */
 
 .App__Navigation {
