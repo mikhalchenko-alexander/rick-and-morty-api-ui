@@ -8,7 +8,7 @@ import model.Page
 import react.*
 
 interface CharacterPageProps : RProps {
-    var showEpisodeList: (Character) -> Unit
+    var showEpisodeList: (List<String>) -> Unit
 }
 
 interface CharacterPageState : RState {
@@ -41,6 +41,6 @@ class CharacterPage : RComponent<CharacterPageProps, CharacterPageState>() {
 
 }
 
-fun RBuilder.characterPage(showEpisodeList: (Character) -> Unit) = child(CharacterPage::class) {
+fun RBuilder.characterPage(showEpisodeList: (List<String>) -> Unit) = child(CharacterPage::class) {
     attrs.showEpisodeList = showEpisodeList
 }

@@ -13,7 +13,7 @@ import model.Character as CharacterModel
 
 interface CharacterProps : RProps {
     var character: CharacterModel
-    var showEpisodeList: ((CharacterModel) -> Unit)?
+    var showEpisodeList: ((List<String>) -> Unit)?
     var additionalClasses: Set<String>
 }
 
@@ -47,7 +47,7 @@ class Character : RComponent<CharacterProps, RState>() {
                     )
 
                     props.showEpisodeList?.let { showEpisodeList ->
-                        button("Episodes", { showEpisodeList(props.character) })
+                        button("Episodes", { showEpisodeList(props.character.episode.toList()) })
                     }
                 }
             }
@@ -56,7 +56,7 @@ class Character : RComponent<CharacterProps, RState>() {
 
 }
 
-fun RBuilder.character(character: CharacterModel, showEpisodeList: ((CharacterModel) -> Unit)?, additionalClasses: Set<String> = emptySet()) =
+fun RBuilder.character(character: CharacterModel, showEpisodeList: ((List<String>) -> Unit)?, additionalClasses: Set<String> = emptySet()) =
     child(Character::class) {
         attrs.character = character
         attrs.showEpisodeList = showEpisodeList

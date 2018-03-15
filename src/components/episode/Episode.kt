@@ -1,9 +1,9 @@
 package components.episode
 
-import kotlinx.html.js.onClickFunction
+import components.button.button
+import components.itemcard.itemCard
 import react.*
 import react.dom.div
-import react.dom.span
 import model.Episode as EpisodeModel
 
 interface EpisodeProps : RProps {
@@ -16,27 +16,17 @@ class Episode : RComponent<EpisodeProps, RState>() {
     override fun RBuilder.render() {
         with(props.episode) {
             div {
-                row("Name:", name)
-                row("Air date:", airDate)
-                row("Episode:", episode)
-                div {
-                    span {
-                        +"Characters..."
+                itemCard(
+                    setOf("Character__ItemCard"),
+                    "Name:" to name,
+                    "Air date:" to airDate,
+                    "Episode:" to episode
+                )
 
-                        attrs {
-                            onClickFunction = { props.showCharacterList(props.episode.characters.toList()) }
-                        }
-                    }
-                }
+                button("Characters...", { props.showCharacterList(props.episode.characters.toList()) })
             }
         }
     }
-
-    private fun RBuilder.row(label: String, value: String) =
-        div {
-            span { +label }
-            span { +value }
-        }
 
 }
 

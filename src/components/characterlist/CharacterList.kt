@@ -7,7 +7,7 @@ import react.dom.div
 
 interface CharacterListProps : RProps {
     var characters: List<Character>
-    var showEpisodeList: (Character) -> Unit
+    var showEpisodeList: (List<String>) -> Unit
 }
 
 class CharacterList(props: CharacterListProps) : RComponent<CharacterListProps, RState>(props) {
@@ -20,7 +20,7 @@ class CharacterList(props: CharacterListProps) : RComponent<CharacterListProps, 
 
 }
 
-fun RBuilder.characterList(characters: List<Character>, showEpisodeList: (Character) -> Unit) = child(CharacterList::class) {
+fun RBuilder.characterList(characters: List<Character>, showEpisodeList: (List<String>) -> Unit) = child(CharacterList::class) {
     attrs.characters = characters
     attrs.showEpisodeList = showEpisodeList
 }

@@ -1,6 +1,7 @@
 package components.app
 
 import api.getCharacters
+import api.getEpisodes
 import components.characterlist.characterList
 import components.characterpage.characterPage
 import components.episodelist.episodeList
@@ -9,6 +10,7 @@ import components.locationpage.locationPage
 import components.navigation.ActivePage
 import components.navigation.navigation
 import model.Character
+import model.Episode
 import react.*
 
 sealed class Screen(val activePage: ActivePage)
@@ -16,7 +18,7 @@ object ScreenCharacterPage : Screen(ActivePage.CHARACTERS)
 object ScreenEpisodePage : Screen(ActivePage.EPISODES)
 object ScreenLocationPage : Screen(ActivePage.LOCATIONS)
 class ScreenCharacterList(val characterList: List<Character>) : Screen(ActivePage.NONE)
-class ScreenEpisodeList(val character: Character) : Screen(ActivePage.NONE)
+class ScreenEpisodeList(val episodes: List<Episode>) : Screen(ActivePage.NONE)
 
 interface AppState : RState {
     var screen: Screen
@@ -40,7 +42,7 @@ class App : RComponent<RProps, AppState>() {
         when (currentScreen) {
             is ScreenCharacterList -> characterList(currentScreen.characterList, ::showEpisodeList)
             is ScreenCharacterPage -> characterPage(::showEpisodeList)
-            is ScreenEpisodeList -> episodeList(currentScreen.character, ::showCharacterList)
+            is ScreenEpisodeList -> episodeList(currentScreen.episodes, ::showCharacterList)
             is ScreenEpisodePage -> episodePage(::showCharacterList)
             is ScreenLocationPage -> locationPage(::showCharacterList)
         }
@@ -52,7 +54,11 @@ class App : RComponent<RProps, AppState>() {
             setScreen(ScreenCharacterList(it))
         }
     }
-    private fun showEpisodeList(character: Character) = setScreen(ScreenEpisodeList(character))
+    private fun showEpisodeList(episodeUrls: List<String>) {
+        getEpisodes(episodeUrls.toList()).then {
+            setScreen(ScreenEpisodeList(it))
+        }
+    }
 }
 
 fun RBuilder.app() = child(App::class) {}
