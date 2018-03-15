@@ -1,9 +1,18 @@
 /* Element */
 
+.ItemCard__ItemCardRow {
+    line-height: 1.7em;
+    display: table-row;
+}
+
 .ItemCard__ItemCardRowKey {
-    display: inline-block;
+    display: table-cell;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: right;
 }
 
 .ItemCard__ItemCardRowValue {
-    display: inline-block;
+    display: table-cell;
+    padding-left: 10px;
 }
