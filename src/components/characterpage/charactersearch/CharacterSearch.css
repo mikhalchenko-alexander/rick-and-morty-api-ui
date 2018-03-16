@@ -1,0 +1,25 @@
+:root {
+    --CharacterSearch__SearchInput_width: 119px;
+    --CharacterSearch__SearchInput_height: 30px;
+}
+
+/* Element */
+
+.CharacterSearch__SearchInput {
+    width: var(--CharacterSearch__SearchInput_width);
+    height: var(--CharacterSearch__SearchInput_height);
+    border: none;
+    border-bottom: 2px solid darkgray;
+    padding: 0 0 0 5px;
+    font-family: "Comic Sans MS", serif;
+    font-size: 18px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* Mixin */
+
+.CharacterSearch__Button {
+    display: inline-block;
+}
