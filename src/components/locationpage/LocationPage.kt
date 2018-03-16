@@ -1,42 +1,19 @@
 package components.locationpage
 
 import api.getLocations
-import components.abstractpage.abstractPage
+import components.itemcardpage.itemCardPage
 import components.locationlist.locationList
-import model.Location
-import model.Page
 import react.*
 
 interface LocationPageProps : RProps {
     var showCharacterList: (List<String>) -> Unit
 }
 
-interface LocationPageState : RState {
-    var locations: Page<Location>?
-}
-
-class LocationPage(props: LocationPageProps) : RComponent<LocationPageProps, LocationPageState>(props) {
-
-    override fun componentDidMount() {
-        getLocations().then { newLocations ->
-            setState {
-                locations = newLocations
-            }
-        }
-    }
+class LocationPage(props: LocationPageProps) : RComponent<LocationPageProps, RState>(props) {
 
     override fun RBuilder.render() {
-        abstractPage<Location> {
-            attrs {
-                getPage = ::getLocations
-                page = state.locations
-                onPageLoad = { setState { locations = it } }
-            }
-
-            state.locations?.results?.toList()?.let { locations ->
-                locationList(locations, props.showCharacterList)
-            }
-        }
+        itemCardPage({ getLocations() }, ::getLocations,
+            { locations -> locationList(locations, props.showCharacterList) })
     }
 }
 
