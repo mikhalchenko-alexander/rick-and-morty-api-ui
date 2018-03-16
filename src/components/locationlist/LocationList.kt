@@ -1,9 +1,9 @@
 package components.locationlist
 
+import components.itemcardlist.itemCardList
 import components.location.location
 import model.Location
 import react.*
-import react.dom.div
 
 interface LocationListProps : RProps {
     var locations: List<Location>
@@ -13,8 +13,8 @@ interface LocationListProps : RProps {
 class LocationList : RComponent<LocationListProps, RState>() {
 
     override fun RBuilder.render() {
-        div(classes = "LocationList") {
-            props.locations.map { location(it, setOf("LocationList__Location"), props.showCharacterList) }
+        itemCardList(props.locations) { location, additionalClasses ->
+            location(location, additionalClasses, props.showCharacterList)
         }
     }
 

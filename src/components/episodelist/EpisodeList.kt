@@ -1,9 +1,9 @@
 package components.episodelist
 
 import components.episode.episode
+import components.itemcardlist.itemCardList
 import model.Episode
 import react.*
-import react.dom.div
 
 interface EpisodeListProps : RProps {
     var episodes: List<Episode>
@@ -13,8 +13,8 @@ interface EpisodeListProps : RProps {
 class EpisodeList : RComponent<EpisodeListProps, RState>() {
 
     override fun RBuilder.render() {
-        div(classes = "EpisodeList") {
-            props.episodes.map { episode(it, setOf("EpisodeList__Episode"), props.showCharacterList) }
+        itemCardList(props.episodes) { episode, additionalClasses ->
+            episode(episode, additionalClasses, props.showCharacterList)
         }
     }
 
