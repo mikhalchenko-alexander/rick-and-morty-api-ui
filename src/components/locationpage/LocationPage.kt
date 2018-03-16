@@ -2,11 +2,10 @@ package components.locationpage
 
 import api.getLocations
 import components.abstractpage.abstractPage
-import components.location.location
+import components.locationlist.locationList
 import model.Location
 import model.Page
 import react.*
-import react.dom.div
 
 interface LocationPageProps : RProps {
     var showCharacterList: (List<String>) -> Unit
@@ -34,14 +33,11 @@ class LocationPage(props: LocationPageProps) : RComponent<LocationPageProps, Loc
                 onPageLoad = { setState { locations = it } }
             }
 
-            div(classes = "LocationPage") {
-                state.locations?.results?.toList()?.let { locations ->
-                    locations.map { location(it, setOf("LocationPage__Location"), props.showCharacterList) }
-                }
+            state.locations?.results?.toList()?.let { locations ->
+                locationList(locations, props.showCharacterList)
             }
         }
     }
-
 }
 
 fun RBuilder.locationPage(showCharacterList: (List<String>) -> Unit) = child(LocationPage::class) {
