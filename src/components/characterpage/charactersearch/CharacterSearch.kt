@@ -4,6 +4,7 @@ import components.button.buttonCustom
 import kotlinx.html.classes
 import kotlinx.html.id
 import kotlinx.html.js.onChangeFunction
+import kotlinx.html.js.onKeyPressFunction
 import org.w3c.dom.HTMLInputElement
 import react.*
 import react.dom.div
@@ -12,17 +13,26 @@ import react.dom.label
 
 interface CharacterSearchProps : RProps {
     var additionalClasses: Set<String>
+    var onSearch: (CharacterSearchFilter) -> Unit
 }
 
 interface CharacterSearchState : RState {
-    var name: String
-    var status: String
-    var species: String
-    var gender: String
-    var type: String
+    var characterSearchFilter: CharacterSearchFilter
 }
 
+data class CharacterSearchFilter(
+    val name: String = "",
+    val status: String = "",
+    val species: String = "",
+    val gender: String = "",
+    val type: String = ""
+)
+
 class CharacterSearch : RComponent<CharacterSearchProps, CharacterSearchState>() {
+
+    override fun CharacterSearchState.init() {
+        characterSearchFilter = CharacterSearchFilter()
+    }
 
     override fun RBuilder.render() {
         div(classes = "CharacterSearch") {
@@ -30,20 +40,20 @@ class CharacterSearch : RComponent<CharacterSearchProps, CharacterSearchState>()
                 classes += props.additionalClasses
             }
 
-            placeholderInput("name", "Name", { name = it })
-            placeholderInput("status", "Status", { status = it })
-            placeholderInput("species", "Species", { species = it })
-            placeholderInput("gender", "Gender", { gender = it })
-            placeholderInput("type", "Type", { type = it })
+            placeholderInput("name", "Name", { this.copy(name = it) })
+            placeholderInput("status", "Status", { this.copy(status = it) })
+            placeholderInput("species", "Species", { this.copy(species = it) })
+            placeholderInput("gender", "Gender", { this.copy(gender = it) })
+            placeholderInput("type", "Type", { this.copy(type = it) })
 
-            buttonCustom("Search!", setOf("CharacterSearch__Button"))
+            buttonCustom("Search!", setOf("CharacterSearch__Button"), { props.onSearch(state.characterSearchFilter) })
         }
     }
 
-    private fun RBuilder.placeholderInput(id: String, label: String, stateUpdater: CharacterSearchState.(String) -> Unit) {
+    private fun RBuilder.placeholderInput(id: String, label: String, stateUpdater: CharacterSearchFilter.(String) -> CharacterSearchFilter) {
         label {
             attrs {
-                htmlFor = label.toLowerCase()
+                set("htmlFor", label.toLowerCase())
             }
             +"$label:"
         }
@@ -53,7 +63,12 @@ class CharacterSearch : RComponent<CharacterSearchProps, CharacterSearchState>()
                 onChangeFunction = {
                     val target = it.target as HTMLInputElement
                     setState {
-                        stateUpdater(target.value)
+                        characterSearchFilter = characterSearchFilter.stateUpdater(target.value)
+                    }
+                }
+                onKeyPressFunction = {
+                    if (it.asDynamic().key == "Enter") {
+                        props.onSearch(state.characterSearchFilter)
                     }
                 }
             }
@@ -62,6 +77,7 @@ class CharacterSearch : RComponent<CharacterSearchProps, CharacterSearchState>()
 
 }
 
-fun RBuilder.characterSearch(additionalClasses: Set<String>) = child(CharacterSearch::class) {
+fun RBuilder.characterSearch(additionalClasses: Set<String>, onSearch: (CharacterSearchFilter) -> Unit) = child(CharacterSearch::class) {
     attrs.additionalClasses = additionalClasses
+    attrs.onSearch = onSearch
 }

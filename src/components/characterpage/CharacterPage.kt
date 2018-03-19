@@ -3,6 +3,7 @@ package components.characterpage
 import api.getCharacters
 import components.abstractpage.abstractPage
 import components.characterlist.characterList
+import components.characterpage.charactersearch.CharacterSearchFilter
 import components.characterpage.charactersearch.characterSearch
 import model.Character
 import model.Page
@@ -20,19 +21,15 @@ interface CharacterPageState : RState {
 class CharacterPage : RComponent<CharacterPageProps, CharacterPageState>() {
 
     override fun componentDidMount() {
-        getCharacters().then { newCharacters ->
-            setState {
-                characters = newCharacters
-            }
-        }
+        getCharacters().then(::updateCharacters)
     }
 
     override fun RBuilder.render() {
         div(classes = "CharacterPage") {
-            characterSearch(setOf("CharacterPage__CharacterSearch"))
+            characterSearch(setOf("CharacterPage__CharacterSearch"), ::onCharacterSearch)
             abstractPage<Character> {
                 attrs {
-                    getPage = ::getCharacters
+                    getPage = { pageUrl -> getCharacters(url = pageUrl) }
                     page = state.characters
                     onPageLoad = { setState { characters = it } }
                 }
@@ -42,6 +39,17 @@ class CharacterPage : RComponent<CharacterPageProps, CharacterPageState>() {
                 }
             }
         }
+    }
+
+    private fun onCharacterSearch(characterSearchFilter: CharacterSearchFilter) {
+        with(characterSearchFilter) {
+            getCharacters(name, status, species, gender, type)
+                .then(::updateCharacters)
+        }
+    }
+
+    private fun updateCharacters(page: Page<Character>) = setState {
+        characters = page
     }
 
 }

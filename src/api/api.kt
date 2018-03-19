@@ -10,7 +10,13 @@ import kotlin.js.Promise
 
 private const val baseUrl = "https://rickandmortyapi.com/api"
 
-fun getCharacters(url: String = "$baseUrl/character"): Promise<Page<Character>> {
+fun getCharacters(
+    name: String = "",
+    status: String = "",
+    species: String = "",
+    gender: String = "",
+    type: String = "",
+    url: String = "$baseUrl/character?name=$name&status=$status&species=$species&gender=$gender&type=$type"): Promise<Page<Character>> {
     return getAndParse(url)
 }
 
