@@ -40,20 +40,21 @@ class CharacterSearch : RComponent<CharacterSearchProps, CharacterSearchState>()
                 classes += props.additionalClasses
             }
 
-            placeholderInput("name", "Name", { this.copy(name = it) })
-            placeholderInput("status", "Status", { this.copy(status = it) })
-            placeholderInput("species", "Species", { this.copy(species = it) })
-            placeholderInput("gender", "Gender", { this.copy(gender = it) })
-            placeholderInput("type", "Type", { this.copy(type = it) })
+            searchInput("Name", { this.copy(name = it) })
+            searchInput("Status", { this.copy(status = it) })
+            searchInput("Species", { this.copy(species = it) })
+            searchInput("Gender", { this.copy(gender = it) })
+            searchInput("Type", { this.copy(type = it) })
 
             buttonCustom("Search!", setOf("CharacterSearch__Button"), { props.onSearch(state.characterSearchFilter) })
         }
     }
 
-    private fun RBuilder.placeholderInput(id: String, label: String, stateUpdater: CharacterSearchFilter.(String) -> CharacterSearchFilter) {
+    private fun RBuilder.searchInput(label: String, stateUpdater: CharacterSearchFilter.(String) -> CharacterSearchFilter) {
+        val id = label.toLowerCase().replace(" ", "-")
         label {
             attrs {
-                set("htmlFor", label.toLowerCase())
+                set("htmlFor", id)
             }
             +"$label:"
         }
