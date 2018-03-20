@@ -36,7 +36,10 @@ fun getEpisode(id: Int): Promise<Episode> {
     return getAndParse("$baseUrl/episode/$id")
 }
 
-fun getEpisodes(url: String = "$baseUrl/episode"): Promise<Page<Episode>> {
+fun getEpisodes(
+    name: String = "",
+    episode: String = "",
+    url: String = "$baseUrl/episode?name=$name&episode=$episode"): Promise<Page<Episode>> {
     return getAndParse(url)
 }
 
