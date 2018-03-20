@@ -57,6 +57,7 @@ class App : RComponent<RProps, AppState>() {
             setScreen(ScreenCharacterList(it))
         }
     }
+
     private fun showEpisodeList(episodeUrls: List<String>) {
         getEpisodes(episodeUrls.toList()).then {
             setScreen(ScreenEpisodeList(it))

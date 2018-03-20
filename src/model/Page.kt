@@ -9,5 +9,6 @@ interface Info {
     val count: Int
     val pages: Int
     val next: String
-    @JsName("prev") val previous: String
+    @JsName("prev")
+    val previous: String
 }

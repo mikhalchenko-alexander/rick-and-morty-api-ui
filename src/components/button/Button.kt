@@ -3,7 +3,10 @@ package components.button
 import kotlinx.html.classes
 import kotlinx.html.js.onClickFunction
 import org.w3c.dom.events.Event
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 import react.dom.div
 
 interface ButtonProps : RProps {
@@ -12,7 +15,7 @@ interface ButtonProps : RProps {
     var additionalClasses: Set<String>
 }
 
-class Button: RComponent<ButtonProps, RState>() {
+class Button : RComponent<ButtonProps, RState>() {
     override fun RBuilder.render() {
         div(classes = "Button") {
             attrs {

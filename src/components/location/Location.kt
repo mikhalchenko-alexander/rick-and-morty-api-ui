@@ -3,9 +3,12 @@ package components.location
 import components.button.button
 import components.itemcard.itemCard
 import kotlinx.html.classes
-import react.*
-import model.Location as LocationModel
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 import react.dom.div
+import model.Location as LocationModel
 
 interface LocationProps : RProps {
     var location: LocationModel

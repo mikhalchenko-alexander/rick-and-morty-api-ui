@@ -2,7 +2,10 @@ package components.characterlist
 
 import components.character.character
 import model.Character
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 import react.dom.div
 
 interface CharacterListProps : RProps {

@@ -3,7 +3,10 @@ package components.locationlist
 import components.itemcardlist.itemCardList
 import components.location.location
 import model.Location
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 
 interface LocationListProps : RProps {
     var locations: List<Location>

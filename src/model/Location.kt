@@ -5,7 +5,7 @@ interface LocationShort {
     val url: String
 }
 
-interface Location: LocationShort {
+interface Location : LocationShort {
     val id: Int
     val type: String
     val dimension: String

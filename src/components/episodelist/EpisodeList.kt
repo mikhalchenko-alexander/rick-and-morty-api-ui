@@ -3,7 +3,10 @@ package components.episodelist
 import components.episode.episode
 import components.itemcardlist.itemCardList
 import model.Episode
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 
 interface EpisodeListProps : RProps {
     var episodes: List<Episode>

@@ -1,7 +1,10 @@
 package components.itemcard
 
 import kotlinx.html.classes
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 import react.dom.div
 
 interface ItemCardProps : RProps {
@@ -17,7 +20,7 @@ class ItemCard : RComponent<ItemCardProps, RState>() {
                 classes += props.additionalClasses
             }
 
-            props.rows.map{ (key, value) ->
+            props.rows.map { (key, value) ->
                 div(classes = "ItemCard__ItemCardRow") {
                     div(classes = "ItemCard__ItemCardRowKey") { +key }
                     div(classes = "ItemCard__ItemCardRowValue") { +value }

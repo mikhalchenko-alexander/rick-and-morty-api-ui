@@ -3,7 +3,10 @@ package components.episode
 import components.button.button
 import components.itemcard.itemCard
 import kotlinx.html.classes
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 import react.dom.div
 import model.Episode as EpisodeModel
 
