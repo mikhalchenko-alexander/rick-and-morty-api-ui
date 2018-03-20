@@ -3,6 +3,8 @@ package components.locationpage
 import api.getLocations
 import components.itemcardpage.itemCardPage
 import components.locationlist.locationList
+import components.locationpage.locationsearch.LocationSearchFilter
+import components.locationpage.locationsearch.locationSearch
 import model.Location
 import model.Page
 import react.*
@@ -22,12 +24,21 @@ class LocationPage(props: LocationPageProps) : RComponent<LocationPageProps, Loc
     }
 
     override fun RBuilder.render() {
+        locationSearch(setOf("LocationPage__LocationSearch"), ::onLocationSearch)
+
         state.locations?.let { locations ->
             itemCardPage(
                 locations,
-                ::getLocations,
+                { pageUrl -> getLocations(url = pageUrl) },
                 { locationList(it, props.showCharacterList) },
                 ::updateLocations)
+        }
+    }
+
+    private fun onLocationSearch(locationSearchFilter: LocationSearchFilter) {
+        with(locationSearchFilter) {
+            getLocations(name, type, dimension)
+                .then(::updateLocations)
         }
     }
 

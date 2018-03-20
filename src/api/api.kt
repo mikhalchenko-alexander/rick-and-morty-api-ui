@@ -51,7 +51,11 @@ fun getEpisodes(episodeUrls: List<String>): Promise<List<Episode>> {
     return Promise.all(episodePromises).then(Array<out Episode>::toList)
 }
 
-fun getLocations(url: String = "$baseUrl/location"): Promise<Page<Location>> {
+fun getLocations(
+    name: String = "",
+    type: String = "",
+    dimension: String = "",
+    url: String = "$baseUrl/location?name=$name&type=$type&dimension=$dimension"): Promise<Page<Location>> {
     return getAndParse(url)
 }
 
