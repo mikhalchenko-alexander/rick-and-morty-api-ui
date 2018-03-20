@@ -1,23 +1,17 @@
 package components.characterpage.charactersearch
 
-import components.button.buttonCustom
+import components.searchbar.SearchFilter
+import components.searchbar.searchBar
 import kotlinx.html.classes
-import kotlinx.html.id
-import kotlinx.html.js.onChangeFunction
-import kotlinx.html.js.onKeyPressFunction
-import org.w3c.dom.HTMLInputElement
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 import react.dom.div
-import react.dom.input
-import react.dom.label
 
 interface CharacterSearchProps : RProps {
     var additionalClasses: Set<String>
     var onSearch: (CharacterSearchFilter) -> Unit
-}
-
-interface CharacterSearchState : RState {
-    var characterSearchFilter: CharacterSearchFilter
 }
 
 data class CharacterSearchFilter(
@@ -26,53 +20,25 @@ data class CharacterSearchFilter(
     val species: String = "",
     val gender: String = "",
     val type: String = ""
-)
+) : SearchFilter
 
-class CharacterSearch : RComponent<CharacterSearchProps, CharacterSearchState>() {
-
-    override fun CharacterSearchState.init() {
-        characterSearchFilter = CharacterSearchFilter()
-    }
+class CharacterSearch : RComponent<CharacterSearchProps, RState>() {
 
     override fun RBuilder.render() {
-        div(classes = "CharacterSearch") {
+        div(classes = "CharacterPage__CharacterSearch") {
             attrs {
                 classes += props.additionalClasses
             }
 
-            searchInput("Name", { this.copy(name = it) })
-            searchInput("Status", { this.copy(status = it) })
-            searchInput("Species", { this.copy(species = it) })
-            searchInput("Gender", { this.copy(gender = it) })
-            searchInput("Type", { this.copy(type = it) })
-
-            buttonCustom("Search!", setOf("CharacterSearch__Button"), { props.onSearch(state.characterSearchFilter) })
-        }
-    }
-
-    private fun RBuilder.searchInput(label: String, stateUpdater: CharacterSearchFilter.(String) -> CharacterSearchFilter) {
-        val id = label.toLowerCase().replace(" ", "-")
-        label {
-            attrs {
-                set("htmlFor", id)
-            }
-            +"$label:"
-        }
-        input(classes = "CharacterSearch__SearchInput") {
-            attrs {
-                this@attrs.id = id
-                onChangeFunction = {
-                    val target = it.target as HTMLInputElement
-                    setState {
-                        characterSearchFilter = characterSearchFilter.stateUpdater(target.value)
-                    }
-                }
-                onKeyPressFunction = {
-                    if (it.asDynamic().key == "Enter") {
-                        props.onSearch(state.characterSearchFilter)
-                    }
-                }
-            }
+            searchBar(
+                CharacterSearchFilter(),
+                mapOf(
+                    "Name" to { value -> this.copy(name = value) },
+                    "Status" to { value -> this.copy(status = value) },
+                    "Species" to { value -> this.copy(species = value) },
+                    "Gender" to { value -> this.copy(gender = value) },
+                    "Type" to { value -> this.copy(type = value) }
+                )) { props.onSearch(it) }
         }
     }
 

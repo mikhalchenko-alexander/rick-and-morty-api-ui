@@ -1,13 +1,13 @@
 :root {
-    --CharacterSearch__SearchInput_width: 119px;
-    --CharacterSearch__SearchInput_height: 30px;
+    --SearchBar__SearchInput_width: 119px;
+    --SearchBar__SearchInput_height: 30px;
 }
 
 /* Element */
 
-.CharacterSearch__SearchInput {
-    width: var(--CharacterSearch__SearchInput_width);
-    height: var(--CharacterSearch__SearchInput_height);
+.SearchBar__SearchInput {
+    width: var(--SearchBar__SearchInput_width);
+    height: var(--SearchBar__SearchInput_height);
     border: none;
     border-bottom: 2px solid darkgray;
     padding: 0 0 0 5px;
@@ -20,6 +20,6 @@
 
 /* Mixin */
 
-.CharacterSearch__Button {
+.SearchBar__Button {
     display: inline-block;
 }
